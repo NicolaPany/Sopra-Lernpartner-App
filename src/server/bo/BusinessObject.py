@@ -7,7 +7,6 @@ class BusinessObject(ABC):
     def __init__(self):
         self._id = 0
         self._erstellungszeit = datetime.datetime.now()
-        self._name = None
 
     def get_id(self):
         return self._id
@@ -17,9 +16,3 @@ class BusinessObject(ABC):
 
     def get_erstellungszeit(self):
         return self._erstellungszeit
-
-    def get_name(self):
-        return self._name
-
-    def set_name(self, name):
-        self._name = name
