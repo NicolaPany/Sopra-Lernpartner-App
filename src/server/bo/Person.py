@@ -7,7 +7,7 @@ class Person(NamedBusinessObject):
         super().__init__()
         self._vorname = None
         """Vorname einer Person"""
-        self._alter = 0
+        self._lebensjahre = 0
         """Alter einer Person"""
         self._geschlecht = None
         """Geschlecht der Person"""
@@ -32,13 +32,13 @@ class Person(NamedBusinessObject):
         """Setzen des Vornamens"""
         self._vorname = vorname
 
-    def get_alter(self):
+    def get_lebensjahre(self):
         """Auslesen des Alters"""
-        return self._alter
+        return self._lebensjahre
 
-    def set_alter(self, alter):
+    def set_lebensjahre(self, lebensjahre):
         """Setzen des Alters"""
-        self._alter = alter
+        self._alter = lebensjahre
 
     def get_geschlecht(self):
         """Auslesen des Geschlechts"""

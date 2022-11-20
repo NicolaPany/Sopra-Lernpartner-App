@@ -1,6 +1,6 @@
 import mysql.connector as connector
 from contextlib import AbstractContextManager
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class Mapper(AbstractContextManager, ABC):
@@ -10,7 +10,6 @@ class Mapper(AbstractContextManager, ABC):
 
     def __enter__(self):
         """Wird ausgeführt, sobald die Klasse mit dem "with" Befehl aufgerufen wird"""
-
 
         """Es soll eine Verbindung zur Datenbank erstellt werden"""
         self._cnx = connector.connect(user='root', password='sopragruppe8-ws23',
@@ -23,3 +22,8 @@ class Mapper(AbstractContextManager, ABC):
 
         """ Wir trennen die Datenbankverbindung"""
         self._cnx.close()
+
+    """ @abstractmethod -> Wir möchten die erbenden Klassen zwingen, die folgenden Methoden zu besitzen!"""
+    @abstractmethod
+    def find_all(self):
+        pass
