@@ -18,16 +18,8 @@ bo = api.model("BusinessObject", {
     "id": fields.String(attribute="_id", description="Id"),
 })
 
-person = api.inherit('Person', bo, {
-    'vorname': fields.String(attribute='_vorname', description='Vorname einer Person'),
-    'alter': fields.Integer(attribute='_alter', description='Alter einer Person'),
-    'geschlecht': fields.String(attribute='_geschlecht', description='Geschlecht einer Person'),
-    'semester': fields.String(attribute='_semester', description='Semester einer Person'),
-    'studiengang': fields.String(attribute='_studiengang', description='Studiengang einer Person'),
-    'lerngruppe': fields.String(attribute='_lerngruppe', description='Lerngruppe einer Person'),
-    'google_user_id': fields.String(attribute='_google_user_id', description='Google user ID einer Person'),
-    'email': fields.String(attribute='_email', description='E-Mail-Adresse einer Person'),
-    'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
+nbo = api.inherit('NamedBusinessObject', bo, {
+    'name': fields.String(attribute='_name', description='Name des BusinessObjects'),
 })
 
 """ Server läuft auf localhost:5000 bzw. 127.0.0.1:5000 """
