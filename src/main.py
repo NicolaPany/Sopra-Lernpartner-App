@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_restx import Api, Resource, fields
 from flask_cors import CORS
-
 from Administration import Administration
 
 """ Wir erstellen ein "Flask-Objekt" """
