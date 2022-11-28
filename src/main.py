@@ -25,7 +25,7 @@ nbo = api.inherit('NamedBusinessObject', bo, {
 
 person = api.inherit('Person', bo, {
     'vorname': fields.String(attribute='_vorname', description='Vorname einer Person'),
-    'alter': fields.Integer(attribute='_alter', description='Alter einer Person'),
+    'alter': fields.Integer(attribute='_lebensjahre', description='Alter einer Person'),
     'geschlecht': fields.String(attribute='_geschlecht', description='Geschlecht einer Person'),
     'semester': fields.String(attribute='_semester', description='Semester einer Person'),
     'studiengang': fields.String(attribute='_studiengang', description='Studiengang einer Person'),
