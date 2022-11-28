@@ -11,10 +11,6 @@ class Person(NamedBusinessObject):
         """Alter einer Person"""
         self._geschlecht = None
         """Geschlecht der Person"""
-        self._semester = 0
-        """Semester einer Person"""
-        self._studiengang = None
-        """Studiengang einer Person"""
         self._lerngruppe = False
         """Info, ob die Person interessiert ist an einer Lerngruppe"""
         self._google_user_id = None
@@ -47,22 +43,6 @@ class Person(NamedBusinessObject):
     def set_geschlecht(self, geschlecht):
         """Setzen des Geschlechts"""
         self._geschlecht = geschlecht
-
-    def get_semester(self):
-        """Auslesen des Semesters"""
-        return self._semester
-
-    def set_semester(self, value):
-        """Setzen des Semesters"""
-        self._semester = value
-
-    def get_studiengang(self):
-        """Auslesen des Studiengangs"""
-        return self._studiengang
-
-    def set_studiengang(self, value):
-        """Setzen des Studiengangs"""
-        self._studiengang = value
 
     def get_lerngruppe(self):
         """Auslesen, ob Interesse an einer Lerngruppe besteht"""

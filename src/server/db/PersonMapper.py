@@ -14,15 +14,13 @@ class PersonMapper(Mapper):
         cursor.execute("SELECT * FROM Person")
         personen_daten = cursor.fetchall()
 
-        for (id, name, vorname, lebensjahre, geschlecht, semester, studiengang, lerngruppe, google_user_id, email, profil_id) in personen_daten:
+        for (person_id, name, vorname, lebensjahre, geschlecht, lerngruppe, google_user_id, email, profil_id) in personen_daten:
             person = Person()
-            person.set_id(id)
+            person.set_id(person_id)
             person.set_name(name)
             person.set_vorname(vorname)
             person.set_lebensjahre(lebensjahre)
             person.set_geschlecht(geschlecht)
-            person.set_semester(semester)
-            person.set_studiengang(studiengang)
             person.set_lerngruppe(lerngruppe)
             person.set_google_user_id(google_user_id)
             person.set_email(email)

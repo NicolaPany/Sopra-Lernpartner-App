@@ -27,12 +27,19 @@ person = api.inherit('Person', bo, {
     'vorname': fields.String(attribute='_vorname', description='Vorname einer Person'),
     'alter': fields.Integer(attribute='_lebensjahre', description='Alter einer Person'),
     'geschlecht': fields.String(attribute='_geschlecht', description='Geschlecht einer Person'),
-    'semester': fields.String(attribute='_semester', description='Semester einer Person'),
-    'studiengang': fields.String(attribute='_studiengang', description='Studiengang einer Person'),
     'lerngruppe': fields.String(attribute='_lerngruppe', description='Lerngruppe einer Person'),
     'google_user_id': fields.String(attribute='_google_user_id', description='Google user ID einer Person'),
     'email': fields.String(attribute='_email', description='E-Mail-Adresse einer Person'),
     'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
+})
+
+profil = api.inherit('Profil', bo, {
+    'hochschule': fields.String(attribute='_hochschule', description='Hochschule, an der eine Person studiert'),
+    'studiengang': fields.String(attribute='_studiengang', description='Studiengang einer Person'),
+    'semester': fields.Integer(attribute='_semester', description='Semester einer Person'),
+    'lernfaecher': fields.String(attribute='_lernfaecher', description='Lernfaecher einer Person'),
+    'selbsteinschaetzung': fields.Integer(attribute='_selbsteinschaetzung', description='Selbsteinschätzung der Person'),
+    'person': fields.Integer(attribute='_person', description='Person ID des Profils'),
 })
 
 """Person"""
@@ -48,6 +55,24 @@ class PersonenOperations(Resource):
         adm = Administration()
         personen = adm.get_all_persons()
         return personen
+
+
+
+"""Profil"""
+@lernpartnerapp.route('/profile')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ProfilOperations(Resource):
+    @lernpartnerapp.marshal_list_with(profil)
+    def get(self):
+        """Auslesen aller Profil-Objekte.
+        Sollten keine Profil-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        profile = adm.get_all_profile()
+        return profile
+
+
 
 """ Server läuft auf localhost:5000 bzw. 127.0.0.1:5000 """
 if __name__ == '__main__':
