@@ -42,6 +42,19 @@ profil = api.inherit('Profil', bo, {
     'person': fields.Integer(attribute='_person', description='Person ID des Profils'),
 })
 
+lerndaten = api.inherit('Lerndaten', bo, {
+    'tageszeit': fields.String(attribute='_tageszeit', description='Präferierte Tageszeit, zu der gelernt wird'),
+    'tage': fields.String(attribute='_tage', description='Präferierte Tage, an denen gelernt wird'),
+    'frequenz': fields.Integer(attribute='_frequenz', description='Frequenz der Lerntage'),
+    'lernort': fields.String(attribute='_lernort', description='Präferierter Ort, an dem gelernt wird'),
+    'lernart': fields.String(attribute='_lernart', description='Auf welche Art am liebsten gelernt wird (online/offline)'),
+    'gruppengroesse_min': fields.Integer(attribute='_gruppengroesse_min', description='Mindestanzahl der gewünschten Gruppenmitglieder'),
+    'gruppengroesse_max': fields.Integer(attribute='_gruppengroesse_max', description='Maximale Anzahl der gewünschten Gruppenmitglieder'),
+    'vorkenntnisse': fields.String(attribute='_vorkenntnisse', description='Eigene Beurteilung der Vorkenntnisse (sehr gut, gut, mittel, schlecht, sehr schlecht)'),
+    'extrovertiertheit': fields.String(attribute='_extrovertiertheit', description='Eigene Beurteilung der Extrovertiertheit (sehr, mittel, schwach)'),
+    'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
+})
+
 """Person"""
 @lernpartnerapp.route('/personen')
 @lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -71,6 +84,22 @@ class ProfilOperations(Resource):
         adm = Administration()
         profile = adm.get_all_profile()
         return profile
+
+
+
+"""Lerndaten"""
+@lernpartnerapp.route('/lerndaten')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class LerndatenOperations(Resource):
+    @lernpartnerapp.marshal_list_with(lerndaten)
+    def get(self):
+        """Auslesen aller Lerndaten-Objekte.
+        Sollten keine Lerndaten-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        lerndaten = adm.get_all_lerndaten()
+        return lerndaten
 
 
 

@@ -30,6 +30,23 @@ CREATE TABLE IF NOT EXISTS `Profil` (
   `person_id` INT NOT NULL,
   PRIMARY KEY (`profil_id`));
   
+
+-- Tabelle erstellen 'Lerndaten'
+-- -----------------------------------------------------------------------  
+CREATE TABLE IF NOT EXISTS `Lerndaten` (
+  `lerndaten_id` INT NOT NULL ,
+  `tageszeit` VARCHAR(45) NULL,
+  `tage` VARCHAR(45) NULL,
+  `frequenz` INT NULL,
+  `lernort` VARCHAR(45) NULL,
+  `lernart` VARCHAR(45) NULL,
+  `gruppengroesse_min` INT NULL,
+  `gruppengroesse_max` INT NULL,
+  `vorkenntnisse` VARCHAR(45) NULL,
+  `extrovertiertheit` VARCHAR(45) NULL,
+  `profil_id` INT NOT NULL,
+  PRIMARY KEY (`lerndaten_id`));
+  
   
 -- Person Entitäten erstellen
 -- ---------------------------------------------------------------------------------------------------------------------------
@@ -48,4 +65,18 @@ VALUES('3', 'Mueller', 'Thomas', '32', 'männlich', '3', '3', 'miasanmia@gmail.c
 INSERT INTO `Profil` (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, person_id)  
 VALUES('20', 'Uni Hohenheim', 'Wiwi', '1', 'BWL', '2', '1');
 INSERT INTO `Profil` (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, person_id)  
-VALUES('30', 'HdM', 'WI', '2', 'Informatik', '4', '2');
+VALUES('30', 'HdM', 'WI', '2', 'Informatik', '2', '2');
+INSERT INTO `Profil` (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, person_id)  
+VALUES('40', 'HdM', 'WI', '4', 'Informatik', '4', '3');
+
+
+
+
+-- Lerndaten Entitäten erstellen
+-- ---------------------------------------------------------------------------------------------------------------------------
+INSERT INTO `Lerndaten` (lerndaten_id, tageszeit, tage, frequenz, lernort, lernart, gruppengroesse_min, gruppengroesse_max, vorkenntnisse, extrovertiertheit, profil_id)  
+VALUES('1', 'morgens', 'Montag, Mittwoch', '2', 'zuhause', 'online', '2', '4', 'schlecht', 'mittel', '20');
+INSERT INTO `Lerndaten` (lerndaten_id, tageszeit, tage, frequenz, lernort, lernart, gruppengroesse_min, gruppengroesse_max, vorkenntnisse, extrovertiertheit, profil_id)  
+VALUES('2', 'mittags', 'Mittwoch, Freitag, Samstag', '3', 'Hochschule', 'offline', '2', '6', 'mittel', 'mittel', '30');
+INSERT INTO `Lerndaten` (lerndaten_id, tageszeit, tage, frequenz, lernort, lernart, gruppengroesse_min, gruppengroesse_max, vorkenntnisse, extrovertiertheit, profil_id)  
+VALUES('3', 'mittags', 'Montag, Freitag', '2', 'Hochschule', 'offline', '2', '6', 'gut', 'sehr', '40');
