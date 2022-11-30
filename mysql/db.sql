@@ -48,6 +48,15 @@ CREATE TABLE IF NOT EXISTS `Lerndaten` (
   PRIMARY KEY (`lerndaten_id`));
   
   
+-- Tabelle erstellen 'Lerngruppe'
+-- -----------------------------------------------------------------------  
+CREATE TABLE IF NOT EXISTS `Lerngruppe` (
+  `lerngruppe_id` INT NOT NULL ,
+  `gruppenname` VARCHAR(45) NULL,
+  `teilnehmer` VARCHAR(140) NULL,
+  PRIMARY KEY (`lerngruppe_id`));
+  
+  
 -- Person Entitäten erstellen
 -- ---------------------------------------------------------------------------------------------------------------------------
 INSERT INTO `Person` (person_id, name, vorname, lebensjahre, geschlecht, lerngruppe, google_user_id, email, profil_id)  
@@ -80,3 +89,12 @@ INSERT INTO `Lerndaten` (lerndaten_id, tageszeit, tage, frequenz, lernort, lerna
 VALUES('2', 'mittags', 'Mittwoch, Freitag, Samstag', '3', 'Hochschule', 'offline', '2', '6', 'mittel', 'mittel', '30');
 INSERT INTO `Lerndaten` (lerndaten_id, tageszeit, tage, frequenz, lernort, lernart, gruppengroesse_min, gruppengroesse_max, vorkenntnisse, extrovertiertheit, profil_id)  
 VALUES('3', 'mittags', 'Montag, Freitag', '2', 'Hochschule', 'offline', '2', '6', 'gut', 'sehr', '40');
+
+
+
+
+-- Lerngruppen Entitäten erstellen
+-- --------------------------------------------------------------------------------
+INSERT INTO `Lerngruppe` (lerngruppe_id, gruppenname, teilnehmer)  
+VALUES('1', 'Informatik für Dummies', 'Peter Wright, Thomas Mueller');
+

@@ -55,6 +55,12 @@ lerndaten = api.inherit('Lerndaten', bo, {
     'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
 })
 
+lerngruppe = api.inherit('Lerngruppe', bo, {
+    'gruppenname': fields.String(attribute='_gruppenname', description='Name der Lerngruppe'),
+    'teilnehmer': fields.Integer(attribute='_teilnehmer', description='Teilnehmer der Lerngruppe'),
+})
+
+
 """Person"""
 @lernpartnerapp.route('/personen')
 @lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -100,6 +106,22 @@ class LerndatenOperations(Resource):
         adm = Administration()
         lerndaten = adm.get_all_lerndaten()
         return lerndaten
+
+
+
+"""Lerngruppe"""
+@lernpartnerapp.route('/lerngruppe')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class LerngruppeOperations(Resource):
+    @lernpartnerapp.marshal_list_with(lerngruppe)
+    def get(self):
+        """Auslesen aller Lerngruppen-Objekte.
+        Sollten keine Lerngruppen-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        lerngruppe = adm.get_all_lerngruppe()
+        return lerngruppe
 
 
 

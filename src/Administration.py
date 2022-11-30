@@ -1,10 +1,12 @@
 from server.bo.Person import Person
 from server.bo.Profil import Profil
 from server.bo.Lerndaten import Lerndaten
+from server.bo.Lerngruppe import Lerngruppe
 
 from server.db.PersonMapper import PersonMapper
 from server.db.ProfilMapper import ProfilMapper
 from server.db.LerndatenMapper import LerndatenMapper
+from server.db.LerngruppeMapper import LerngruppeMapper
 
 class Administration(object):
 
@@ -77,4 +79,21 @@ class Administration(object):
     def get_all_lerndaten(self):
         """Alle Lerndaten auslesen"""
         with LerndatenMapper() as mapper:
+            return mapper.find_all()
+
+
+    def create_lerngruppe(self, gruppenname, teilnehmer):
+        """Eine Lerngruppe erstellen"""
+
+        lerngruppe = Lerngruppe()
+        lerngruppe.set_gruppenname(gruppenname)
+        lerngruppe.set_teilnehmer(teilnehmer)
+        lerngruppe.set_id(1)
+
+        with LerngruppeMapper() as mapper:
+            return mapper.insert(lerngruppe)
+
+    def get_all_lerngruppe(self):
+        """Alle Lerngruppen auslesen"""
+        with LerngruppeMapper() as mapper:
             return mapper.find_all()

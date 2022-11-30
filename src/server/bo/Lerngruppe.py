@@ -5,13 +5,24 @@ class Lerngruppe(NamedBusinessObject):
 
     def __init__(self):
         super().__init__()
-        self._gruppenprofil = None
-        """Profil (ID) der Lerngruppe"""
+        self.gruppenname = None
+        """Name der Lerngruppe"""
+        self._teilnehmer = None
+        """Teilnehmer der Lerngruppe"""
 
-    def get_gruppenprofil(self):
-        """Auslesen eines Gruppenprofils"""
-        return self._gruppenprofil
+    def get_gruppenname(self):
+        """Auslesen des Gruppennamens"""
+        return self._gruppenname
 
-    def set_gruppenprofil(self, gruppenprofil):
-        """Setzen eines Gruppenprofils"""
-        self._gruppenprofil = gruppenprofil
+    def set_gruppenname(self, gruppenname):
+        """Setzen des Gruppennamens"""
+        self._gruppenname = gruppenname
+
+    def get_teilnehmer(self):
+        """Auslesen der Gruppenteilnehmer"""
+        return self._teilnehmer
+
+    def set_teilnehmer(self, teilnehmer):
+        """Setzen der Gruppenteilnehmer"""
+        self._teilnehmer = teilnehmer
+
