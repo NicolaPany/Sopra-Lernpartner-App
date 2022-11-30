@@ -57,7 +57,7 @@ lerndaten = api.inherit('Lerndaten', bo, {
 
 lerngruppe = api.inherit('Lerngruppe', bo, {
     'gruppenname': fields.String(attribute='_gruppenname', description='Name der Lerngruppe'),
-    'teilnehmer': fields.Integer(attribute='_teilnehmer', description='Teilnehmer der Lerngruppe'),
+    'teilnehmer': fields.String(attribute='_teilnehmer', description='Teilnehmer der Lerngruppe'),
 })
 
 

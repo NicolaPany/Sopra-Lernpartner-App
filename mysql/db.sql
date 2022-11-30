@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `Lerndaten` (
 CREATE TABLE IF NOT EXISTS `Lerngruppe` (
   `lerngruppe_id` INT NOT NULL ,
   `gruppenname` VARCHAR(45) NULL,
-  `teilnehmer` VARCHAR(140) NULL,
+  `teilnehmer` VARCHAR(45) NULL,
   PRIMARY KEY (`lerngruppe_id`));
   
   
