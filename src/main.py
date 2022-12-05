@@ -75,6 +75,19 @@ class PersonenOperations(Resource):
         personen = adm.get_all_persons()
         return personen
 
+""" Eine bestimmte Person wird mit Hilfe ihrer ID ausgelesen   """
+@lernpartnerapp.route("/personen/<int:person_id>")
+@lernpartnerapp.param("person_id", "Die Id der gewünschten Person")
+class PersonByIdOperations(Resource):
+    @lernpartnerapp.marshal_with(person)
+    def get(self, person_id):
+        """ Auslesen der Person Instanz.
+        Das zu auslesende Objekt wird anhand der id bestimmt
+        """
+        adm = Administration()
+        person = adm.get_person_by_id(person_id)
+        return person
+
 
 
 """Profil"""

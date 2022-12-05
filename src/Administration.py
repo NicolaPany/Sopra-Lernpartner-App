@@ -35,6 +35,11 @@ class Administration(object):
         with PersonMapper() as mapper:
             return mapper.find_all()
 
+    def get_person_by_id(self, person_id):
+        """ Wir geben die Person mit der angegebenen ID zurück """
+        with PersonMapper() as mapper:
+            return mapper.find_by_id(person_id)
+
 
     def create_profil(self, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, id):
         """Ein Profil anlegen"""
