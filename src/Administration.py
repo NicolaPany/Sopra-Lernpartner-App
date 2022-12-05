@@ -40,6 +40,12 @@ class Administration(object):
         with PersonMapper() as mapper:
             return mapper.find_by_id(person_id)
 
+    def delete_person_by_person_id(self, person_id):
+        """ Wir löschen die Person anhand der angegebenen Personen ID """
+        with PersonMapper() as mapper:
+            return mapper.delete(person_id)
+
+
 
     def create_profil(self, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, id):
         """Ein Profil anlegen"""

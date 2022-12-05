@@ -75,7 +75,7 @@ class PersonenOperations(Resource):
         personen = adm.get_all_persons()
         return personen
 
-""" Eine bestimmte Person wird mit Hilfe ihrer ID ausgelesen   """
+
 @lernpartnerapp.route("/personen/<int:person_id>")
 @lernpartnerapp.param("person_id", "Die Id der gewünschten Person")
 class PersonByIdOperations(Resource):
@@ -88,6 +88,13 @@ class PersonByIdOperations(Resource):
         person = adm.get_person_by_id(person_id)
         return person
 
+    def delete(self, person_id):
+        """Löschen einer Person Instanz.
+        Das zu löschende Objekt wird anhand der id bestimmt.
+        """
+        adm = Administration()
+        person = adm.delete_person_by_person_id(person_id)
+        return person
 
 
 """Profil"""

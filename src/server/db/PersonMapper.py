@@ -63,3 +63,18 @@ class PersonMapper(Mapper):
         cursor.close()
         print(result)
         return result
+
+
+    def delete(self, person):
+        """Löschen der Daten eines Person-Objekts aus der Datenbank.
+        :param person das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM Person WHERE person_id={}".format(person)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+        return person
+
