@@ -58,3 +58,17 @@ class ProfilMapper(Mapper):
         cursor.close()
         print(result)
         return result
+
+
+    def delete(self, profil):
+        """Löschen der Daten eines Profil-Objekts aus der Datenbank.
+        :param profil das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM Profil WHERE profil_id={}".format(profil)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+        return profil

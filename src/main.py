@@ -113,7 +113,7 @@ class ProfilOperations(Resource):
 
 @lernpartnerapp.route("/profile/<int:profil_id>")
 @lernpartnerapp.param("profil_id", "Die Id des gewünschten Profils")
-class ProdilByIdOperations(Resource):
+class ProfilByIdOperations(Resource):
     @lernpartnerapp.marshal_with(profil)
     def get(self, profil_id):
         """ Auslesen der Profil Instanz.
@@ -121,6 +121,14 @@ class ProdilByIdOperations(Resource):
         """
         adm = Administration()
         profil = adm.get_profil_by_id(profil_id)
+        return profil
+
+    def delete(self, profil_id):
+        """Löschen einer Profil Instanz.
+        Das zu löschende Objekt wird anhand der id bestimmt.
+        """
+        adm = Administration()
+        profil = adm.delete_profil_by_profil_id(profil_id)
         return profil
 
 
