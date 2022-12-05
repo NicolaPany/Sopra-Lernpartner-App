@@ -111,6 +111,17 @@ class ProfilOperations(Resource):
         profile = adm.get_all_profile()
         return profile
 
+@lernpartnerapp.route("/profile/<int:profil_id>")
+@lernpartnerapp.param("profil_id", "Die Id des gewünschten Profils")
+class ProdilByIdOperations(Resource):
+    @lernpartnerapp.marshal_with(profil)
+    def get(self, profil_id):
+        """ Auslesen der Profil Instanz.
+        Das zu auslesende Objekt wird anhand der id bestimmt
+        """
+        adm = Administration()
+        profil = adm.get_profil_by_id(profil_id)
+        return profil
 
 
 """Lerndaten"""

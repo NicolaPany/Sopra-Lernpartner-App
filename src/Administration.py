@@ -67,6 +67,11 @@ class Administration(object):
         with ProfilMapper() as mapper:
             return mapper.find_all()
 
+    def get_profil_by_id(self, profil_id):
+        """ Wir geben das Profil mit der angegebenen ID zurück """
+        with ProfilMapper() as mapper:
+            return mapper.find_by_id(profil_id)
+
 
     def create_lerndaten(self, tageszeit, tage, frequenz, lernort, lernart, gruppengroesse_min, gruppengroesse_max, vorkenntnisse, extrovertiertheit, profil_id):
         """Lerndaten anlegen"""
