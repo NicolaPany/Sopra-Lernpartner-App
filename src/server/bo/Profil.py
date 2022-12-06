@@ -25,7 +25,6 @@ class Profil(NamedBusinessObject):
         """Setzen der Hochschule"""
         self._hochschule = hochschule
 
-
     def get_studiengang(self):
         """Auslesen des Studiengangs"""
         return self._studiengang
@@ -33,14 +32,12 @@ class Profil(NamedBusinessObject):
         """Setzen des Studiengangs"""
         self._studiengang = studiengang
 
-
     def get_semester(self):
         """Auslesen des Semesters"""
         return self._semester
     def set_semester(self, value):
         """Setzen des Semesters"""
         self._semester = value
-
 
     def get_lernfaecher(self):
         """Auslesen der Lernfächer"""
@@ -50,7 +47,6 @@ class Profil(NamedBusinessObject):
         """Setzen der Lernfächer"""
         self._lernfaecher = lernfaecher
 
-
     def get_selbsteinschaetzung(self):
         """Auslesen der Selbsteinschätzung"""
         return self._selbsteinschaetzung
@@ -58,7 +54,6 @@ class Profil(NamedBusinessObject):
     def set_selbsteinschaetzung(self, value):
         """Setzen der Selbsteinschätzung"""
         self._selbsteinschaetzung = value
-
 
     def get_person(self):
         """Auslesen einer Person"""
