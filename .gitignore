@@ -4,3 +4,5 @@ src/__pycache__/Administration.cpython-310.pyc
 *.pyc
 src/server/bo/__pycache__/Profil.cpython-310.pyc
 src/server/db/__pycache__/LerngruppeMapper.cpython-310.pyc
+*.pyc
+*.pyc
