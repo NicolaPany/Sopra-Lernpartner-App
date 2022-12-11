@@ -2,11 +2,13 @@ from server.bo.Person import Person
 from server.bo.Profil import Profil
 from server.bo.Lerndaten import Lerndaten
 from server.bo.Lerngruppe import Lerngruppe
+from server.bo.Konversation import Konversation
 
 from server.db.PersonMapper import PersonMapper
 from server.db.ProfilMapper import ProfilMapper
 from server.db.LerndatenMapper import LerndatenMapper
 from server.db.LerngruppeMapper import LerngruppeMapper
+from server.db.KonversationMapper import KonversationMapper
 
 class Administration(object):
 
@@ -118,3 +120,29 @@ class Administration(object):
         """Alle Lerngruppen auslesen"""
         with LerngruppeMapper() as mapper:
             return mapper.find_all()
+
+    def get_lerngruppe_by_id(self, lerngruppe_id):
+        """ Wir geben die Lerngruppe mit der angegebenen ID zurück """
+        with LerngruppeMapper() as mapper:
+            return mapper.find_by_id(lerngruppe_id)
+
+
+    def create_konversation(self, anfragestatus):
+        """Eine Konversation erstellen"""
+
+        konversation = Konversation()
+        konversation.set_anfragestatus(anfragestatus)
+        konversation.set_id(1)
+
+        with KonversationMapper() as mapper:
+            return mapper.insert(konversation)
+
+    def get_all_konversation(self):
+        """Alle Konversationen auslesen"""
+        with KonversationMapper() as mapper:
+            return mapper.find_all()
+
+    def get_konversation_by_id(self, konversation_id):
+        """ Wir geben die Konversation mit der angegebenen ID zurück """
+        with KonversationMapper() as mapper:
+            return mapper.find_by_id(konversation_id)

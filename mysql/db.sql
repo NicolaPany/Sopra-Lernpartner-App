@@ -56,6 +56,14 @@ CREATE TABLE IF NOT EXISTS `Lerngruppe` (
   `teilnehmer` VARCHAR(45) NULL,
   PRIMARY KEY (`lerngruppe_id`));
   
+
+-- Tabelle erstellen 'Konversation'
+-- -----------------------------------------------------------------------  
+CREATE TABLE IF NOT EXISTS `Konversation` (
+  `konversation_id` INT NOT NULL ,
+  `anfragestatus` VARCHAR(45) NULL,
+  PRIMARY KEY (`konversation_id`));
+  
   
 -- Person Entitäten erstellen
 -- ---------------------------------------------------------------------------------------------------------------------------
@@ -98,3 +106,9 @@ VALUES('3', 'mittags', 'Montag, Freitag', '2', 'Hochschule', 'offline', '2', '6'
 INSERT INTO `Lerngruppe` (lerngruppe_id, gruppenname, teilnehmer)  
 VALUES('1', 'Informatik für Dummies', 'Peter Wright, Thomas Mueller');
 
+
+
+-- Konversation Entitäten erstellen
+-- --------------------------------------------------------------------------------
+INSERT INTO `Konversation` (konversation_id, anfragestatus)  
+VALUES('1', 'akzeptiert');

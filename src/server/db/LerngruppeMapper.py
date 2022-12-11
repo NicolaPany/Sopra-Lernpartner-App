@@ -15,10 +15,36 @@ class LerngruppeMapper(Mapper):
 
         for (lerngruppe_id, gruppenname, teilnehmer) in lerngruppe_daten:
             lerngruppe = Lerngruppe()
+            lerngruppe.set_id(lerngruppe_id)
             lerngruppe.set_gruppenname(gruppenname)
             lerngruppe.set_teilnehmer(teilnehmer)
             result.append(lerngruppe)
             print(result)
+
+        self._cnx.commit()
+        cursor.close()
+        print(result)
+        return result
+
+    def find_by_id(self, id):
+        """ Wir suchen eine Lerngruppe mit der jeweiligen ID """
+        result = None
+
+        cursor = self._cnx.cursor()
+        command = "SELECT * FROM Lerngruppe WHERE lerngruppe_id={0}".format(id)
+        cursor.execute(command)
+        lerngruppe_daten = cursor.fetchall()
+
+        try:
+            (lerngruppe_id, gruppenname, teilnehmer) = lerngruppe_daten[0]
+            lerngruppe = Lerngruppe()
+            lerngruppe.set_id(lerngruppe_id)
+            lerngruppe.set_gruppenname(gruppenname)
+            lerngruppe.set_teilnehmer(teilnehmer)
+            result = lerngruppe
+        except IndexError:
+            """ Tritt auf, wenn es beim SELECT-Aufruf kein Ergebnis liefert, sondern lerngruppe_daten leer ist """
+            result = None
 
         self._cnx.commit()
         cursor.close()

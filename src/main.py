@@ -60,6 +60,9 @@ lerngruppe = api.inherit('Lerngruppe', bo, {
     'teilnehmer': fields.String(attribute='_teilnehmer', description='Teilnehmer der Lerngruppe'),
 })
 
+konversation = api.inherit('Konversation', bo, {
+    'anfragestatus': fields.String(attribute='_anfragestatus', description='Der Anfragestatus der Konversation, sprich, haben beide Teilnehmer die Chatanfrage bestätigt'),
+})
 
 """Person"""
 @lernpartnerapp.route('/personen')
@@ -162,6 +165,45 @@ class LerngruppeOperations(Resource):
         lerngruppe = adm.get_all_lerngruppe()
         return lerngruppe
 
+@lernpartnerapp.route("/lerngruppe/<int:lerngruppe_id>")
+@lernpartnerapp.param("lerngruppe_id", "Die Id der gewünschten Lerngruppe")
+class LerngruppeByIdOperations(Resource):
+    @lernpartnerapp.marshal_with(lerngruppe)
+    def get(self, lerngruppe_id):
+        """ Auslesen der Lerngruppen Instanz.
+        Das zu auslesende Objekt wird anhand der id bestimmt
+        """
+        adm = Administration()
+        lerngruppe = adm.get_lerngruppe_by_id(lerngruppe_id)
+        return lerngruppe
+
+
+
+"""Konversation"""
+@lernpartnerapp.route('/konversation')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class KonversationOperations(Resource):
+    @lernpartnerapp.marshal_list_with(konversation)
+    def get(self):
+        """Auslesen aller Konversations-Objekte.
+        Sollten keine Konversations-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        konversation = adm.get_all_konversation()
+        return konversation
+
+@lernpartnerapp.route("/konversation/<int:konversation_id>")
+@lernpartnerapp.param("konversation_id", "Die Id der gewünschten Konversation")
+class KonversationByIdOperations(Resource):
+    @lernpartnerapp.marshal_with(konversation)
+    def get(self, konversation_id):
+        """ Auslesen der Konversation Instanz.
+        Das zu auslesende Objekt wird anhand der id bestimmt
+        """
+        adm = Administration()
+        konversation = adm.get_konversation_by_id(konversation_id)
+        return konversation
 
 
 """ Server läuft auf localhost:5000 bzw. 127.0.0.1:5000 """
