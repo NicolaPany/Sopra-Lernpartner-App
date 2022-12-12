@@ -65,6 +65,16 @@ CREATE TABLE IF NOT EXISTS `Konversation` (
   PRIMARY KEY (`konversation_id`));
   
   
+  -- Tabelle erstellen 'Nachricht'
+-- -----------------------------------------------------------------------  
+CREATE TABLE IF NOT EXISTS `Nachricht` (
+  `nachricht_id` INT NOT NULL ,
+  `nachricht_text` VARCHAR(300) NULL,
+  `person_id` INT NOT NULL,
+  `konversation_id` INT NOT NULL ,
+  PRIMARY KEY (`nachricht_id`));
+  
+  
 -- Person Entitäten erstellen
 -- ---------------------------------------------------------------------------------------------------------------------------
 INSERT INTO `Person` (person_id, name, vorname, lebensjahre, geschlecht, lerngruppe, google_user_id, email, profil_id)  
@@ -112,3 +122,10 @@ VALUES('1', 'Informatik für Dummies', 'Peter Wright, Thomas Mueller');
 -- --------------------------------------------------------------------------------
 INSERT INTO `Konversation` (konversation_id, anfragestatus)  
 VALUES('1', 'akzeptiert');
+
+
+
+-- Nachricht Entitäten erstellen
+-- --------------------------------------------------------------------------------
+INSERT INTO `Nachricht` (nachricht_id, nachricht_text, person_id, konversation_id)  
+VALUES('1', 'Hallo, ich würde gerne Informatik lernen', '2', '1');

@@ -64,6 +64,12 @@ konversation = api.inherit('Konversation', bo, {
     'anfragestatus': fields.String(attribute='_anfragestatus', description='Der Anfragestatus der Konversation, sprich, haben beide Teilnehmer die Chatanfrage bestätigt'),
 })
 
+nachricht = api.inherit('Nachricht', bo, {
+    'nachricht_text': fields.String(attribute='_nachricht_text', description='Der Text, den eine Nachricht beinhaltet'),
+    'person_id': fields.Integer(attribute='_person_id', description='Die ID der Person, die die Nachricht sendet'),
+    'konversation_id': fields.Integer(attribute='_konversation_id', description='Die ID der zugehörigen Konversation'),
+})
+
 """Person"""
 @lernpartnerapp.route('/personen')
 @lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
@@ -204,6 +210,21 @@ class KonversationByIdOperations(Resource):
         adm = Administration()
         konversation = adm.get_konversation_by_id(konversation_id)
         return konversation
+
+
+"""Nachricht"""
+@lernpartnerapp.route('/nachricht')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class NachrichtOperations(Resource):
+    @lernpartnerapp.marshal_list_with(nachricht)
+    def get(self):
+        """Auslesen aller Nachrichten-Objekte.
+        Sollten keine Nachrichten-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        nachricht = adm.get_all_nachricht()
+        return nachricht
 
 
 """ Server läuft auf localhost:5000 bzw. 127.0.0.1:5000 """

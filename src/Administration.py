@@ -3,12 +3,14 @@ from server.bo.Profil import Profil
 from server.bo.Lerndaten import Lerndaten
 from server.bo.Lerngruppe import Lerngruppe
 from server.bo.Konversation import Konversation
+from server.bo.Nachricht import Nachricht
 
 from server.db.PersonMapper import PersonMapper
 from server.db.ProfilMapper import ProfilMapper
 from server.db.LerndatenMapper import LerndatenMapper
 from server.db.LerngruppeMapper import LerngruppeMapper
 from server.db.KonversationMapper import KonversationMapper
+from server.db.NachrichtMapper import NachrichtMapper
 
 class Administration(object):
 
@@ -146,3 +148,21 @@ class Administration(object):
         """ Wir geben die Konversation mit der angegebenen ID zurück """
         with KonversationMapper() as mapper:
             return mapper.find_by_id(konversation_id)
+
+
+    def create_nachricht(self, nachricht_text, person_id, konversation_id):
+        """Eine Nachricht erstellen"""
+
+        nachricht = Nachricht()
+        nachricht.set_nachricht_text(nachricht_text)
+        nachricht.set_person_id(person_id)
+        nachricht.set_konversation_id(konversation_id)
+        nachricht.set_id(1)
+
+        with NachrichtMapper() as mapper:
+            return mapper.insert(nachricht)
+
+    def get_all_nachricht(self):
+        """Alle Nachrichten auslesen"""
+        with NachrichtMapper() as mapper:
+            return mapper.find_all()
