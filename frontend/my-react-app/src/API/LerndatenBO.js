@@ -2,7 +2,7 @@ import BusinessObject from './BusinessObject';
 
 export default class LerndatenBO extends BusinessObject{
 
-    constructor(tageszeit, tage, frequenz, lernort, lernart, gruppengroesse_min, gruppengroesse_max, vorkenntnisse, extrovertiertheit, profil_id)
+    constructor(tageszeit, tage, frequenz, lernort, lernart, gruppengroesse_min, gruppengroesse_max, vorkenntnisse, extrovertiertheit, profil_id){
         super();
         this.tageszeit = tageszeit
         this.tage = tage
@@ -95,4 +95,6 @@ export default class LerndatenBO extends BusinessObject{
     setprofil_id(profil_id){
         this.profil_id = profil_id;
     }
+
+}
 
