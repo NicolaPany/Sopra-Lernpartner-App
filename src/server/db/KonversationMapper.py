@@ -45,6 +45,55 @@ class KonversationMapper(Mapper):
             """ Tritt auf, wenn es beim SELECT-Aufruf kein Ergebnis liefert, sondern konversation_daten leer ist """
             result = None
 
+    def delete(self, konversation):
+        """Löschen der Daten eines Konversations-Objekts aus der Datenbank.
+
+        :param konversation das aus der DB zu löschende "Objekt"
+        """
+        cursor = self._cnx.cursor()
+
+        command = "DELETE FROM Konversation WHERE konversation_id={}".format(konversation)
+        cursor.execute(command)
+
+        self._cnx.commit()
+        cursor.close()
+        return konversation
+
+    def update(self, konversation):
+        """Überschreiben eines Konversation-Objekts in die Datenbank.
+        :param konversation das Objekt, das in die DB geschrieben werden soll
+        """
+        cursor = self._cnx.cursor()
+        command = "UPDATE Konversation " + "SET anfragestatus=%s WHERE konversation_id=%s"
+        data = (konversation.get_anfragestatus(), konversation.get_id())
+        cursor.execute(command, data)
+
+        self._cnx.commit()
+        cursor.close()
+
+    def insert(self, konversation):
+        """ Einfügen eines neuen Konversation-Objekts in die Datenbank.
+        parameter: Konversation Instanz, die in der Datenbank gespeichert werden soll
+        return: Die Konversation Instanz mit korrigierter bzw. inkrementierter ID
+        """
+
+        cursor = self._cnx.cursor()
+        cursor.execute("SELECT MAX(konversation_id) AS maxid FROM Konversation ")
+        tuples = cursor.fetchall()
+
+        for (maxid) in tuples:
+            konversation.set_id(maxid[0] + 1)
+
+        """ Hier wird die Konversation Instanz in die Datenbank mit Hilfe des Insert Befehl gespeichert """
+        command = "INSERT INTO Konversation (konversation_id, anfragestatus) VALUES (%s,%s)"
+        data = (konversation.get_id(), konversation.get_anfragestatus())
+        cursor.execute(command, data)
+
+        self._cnx.commit()
+        cursor.close()
+
+        return konversation
+
         self._cnx.commit()
         cursor.close()
         print(result)

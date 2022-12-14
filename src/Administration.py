@@ -76,6 +76,11 @@ class Administration(object):
         with ProfilMapper() as mapper:
             return mapper.find_by_id(profil_id)
 
+    def update_profil(self, profil):
+        """ Wir aktualisieren die Profil-Daten"""
+        with ProfilMapper() as mapper:
+            return mapper.update(profil)
+
     def delete_profil_by_profil_id(self, profil_id):
         """ Wir löschen das Profil anhand der angegebenen Profil-ID """
         with ProfilMapper() as mapper:
@@ -148,6 +153,17 @@ class Administration(object):
         """ Wir geben die Konversation mit der angegebenen ID zurück """
         with KonversationMapper() as mapper:
             return mapper.find_by_id(konversation_id)
+
+    def delete_konversation_by_konversation_id(self, konversation_id):
+        """ Wir löschen die Konversation anhand der angegebenen Konversations-ID """
+        with KonversationMapper() as mapper:
+            #konversation = self.get_all_konversation()
+            return mapper.delete(konversation_id)
+
+    def update_konversation(self, konversation):
+        """ Wir aktualisieren die Konversations-Daten"""
+        with KonversationMapper() as mapper:
+            return mapper.update(konversation)
 
 
     def create_nachricht(self, nachricht_text, person_id, konversation_id):

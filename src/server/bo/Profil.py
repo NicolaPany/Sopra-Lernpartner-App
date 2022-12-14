@@ -62,3 +62,16 @@ class Profil(NamedBusinessObject):
     def set_person(self, value):
         """Setzen einer Person"""
         self._person = value
+
+    def from_dict(dictionary=dict()):
+        """Umwandeln eines Python dict() in ein Profil()."""
+        obj = Profil()
+        obj.set_id(dictionary["id"])
+        obj.set_hochschule(dictionary["hochschule"])
+        obj.set_studiengang(dictionary["studiengang"])
+        obj.set_semester(dictionary["semester"])
+        obj.set_lernfaecher(dictionary["lernfaecher"])
+        obj.set_selbsteinschaetzung(dictionary["selbsteinschaetzung"])
+        obj.set_person(dictionary["person"])
+
+        return obj
