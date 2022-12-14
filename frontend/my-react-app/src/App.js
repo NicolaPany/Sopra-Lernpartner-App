@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Title from './Components/Title';
+import SignIn from './Pages/SignIn';
 import { BrowserRouter as Router, Route, Navigate, Routes, useLocation } from 'react-router-dom';
 import { Container, ThemeProvider, CssBaseline } from '@mui/material';
 import { initializeApp } from 'firebase/app';
@@ -104,12 +105,27 @@ class App extends React.Component {
 	}
 
     render() {
+		const { currentUser } = this.state;
         return (
-           <div className="App">
-           <Title />
-           </div>
-           )
-  }
+			<Router basename={process.env.PUBLIC_URL}>
+				<Container maxWidth='xl'>
+					<Title user={currentUser}></Title>
+					{
+						// Ist der Benutzer schon eingeloggt -> Dann soll <Login> geladen werden
+						currentUser ?
+							<>
+							</>
+							:
+							// Wenn der Benutzer nicht eingeloggt ist -> Dann soll <SignIn> geladen werden
+							<>
+								<SignIn onSignIn={this.handleSignIn} />
+							</>
+					}
+				</Container>
+			</Router>
+
+        );
+  	}
 }
 
 export default App;
