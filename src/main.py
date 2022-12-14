@@ -2,6 +2,13 @@ from flask import Flask
 from flask_restx import Api, Resource, fields
 from flask_cors import CORS
 from Administration import Administration
+from server.bo.Konversation import Konversation
+from server.bo.Lerndaten import Lerndaten
+from server.bo.Lernfach import Lernfach
+from server.bo.Lerngruppe import Lerngruppe
+from server.bo.Nachricht import Nachricht
+from server.bo.Person import Person
+from server.bo.Profil import Profil
 
 """ Wir erstellen ein "Flask-Objekt" """
 app = Flask(__name__)
@@ -120,6 +127,25 @@ class ProfilOperations(Resource):
         profile = adm.get_all_profile()
         return profile
 
+    @lernpartnerapp.marshal_with(profil, code=201)
+    @lernpartnerapp.expect(profil)
+    def post(self):
+        """ Profil Instanz erstellen """
+        adm = Administration()
+        """ Wir setzen den api.payload in die from_dict Methode ein und erstellen damit ein Profil, indem wir die 
+        Attribute aus den Werten von api.payload setzen. profil_object = Profil-Objekt """
+        profil_object = Profil.from_dict(api.payload)
+
+        if profil_object is not None:
+            """ Wir erstellen in Administration eine Projekt mithilfe der Daten vom api.payload """
+            c = adm.create_profil(profil_object.get_hochschule(), profil_object.get_studiengang(),
+                                  profil_object.get_semester(), profil_object.get_lernfaecher(),
+                                  profil_object.get_selbsteinschaetzung(), profil_object.get_person())
+            return c, 200
+        else:
+            # Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.
+            return '', 500
+
 @lernpartnerapp.route("/profile/<int:profil_id>")
 @lernpartnerapp.param("profil_id", "Die Id des gewünschten Profils")
 class ProfilByIdOperations(Resource):
@@ -139,6 +165,22 @@ class ProfilByIdOperations(Resource):
         adm = Administration()
         profil = adm.delete_profil_by_profil_id(profil_id)
         return profil
+
+    @lernpartnerapp.marshal_with(profil)
+    @lernpartnerapp.expect(profil, validate=True)
+    def put(self, profil_id):
+        """ Profil Instanz updaten """
+        adm = Administration()
+        profil_object = Profil.from_dict(api.payload)
+
+        if profil_object is not None:
+            """Hierdurch wird die id des zu überschreibenden Profil-Objekts gesetzt.
+            """
+            profil_object.set_id(profil_id)
+            adm.update_profil(profil_object)
+            return '', 200
+        else:
+            return '', 500
 
 
 """Lerndaten"""
@@ -199,6 +241,23 @@ class KonversationOperations(Resource):
         konversation = adm.get_all_konversation()
         return konversation
 
+    @lernpartnerapp.marshal_with(konversation, code=201)
+    @lernpartnerapp.expect(konversation)
+    def post(self):
+        """ Konversation Instanz erstellen """
+        adm = Administration()
+        """ Wir setzen den api.payload in die from_dict Methode ein und erstellen damit eine Konversation, indem wir 
+        ihre Attribute aus den Werten von api.payload setzen. konversation_object = Konversation-Objekt """
+        konversation_object = Konversation.from_dict(api.payload)
+
+        if konversation_object is not None:
+            """ Wir erstellen in Administration eine Konversation mithilfe der Daten des api.payload """
+            c = adm.create_konversation(konversation_object.get_anfragestatus())
+            return c, 200
+        else:
+            # Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.
+            return '', 500
+
 @lernpartnerapp.route("/konversation/<int:konversation_id>")
 @lernpartnerapp.param("konversation_id", "Die Id der gewünschten Konversation")
 class KonversationByIdOperations(Resource):
@@ -210,6 +269,30 @@ class KonversationByIdOperations(Resource):
         adm = Administration()
         konversation = adm.get_konversation_by_id(konversation_id)
         return konversation
+
+    def delete(self, konversation_id):
+        """Löschen einer Konversation Instanz.
+        Das zu löschende Objekt wird anhand der id bestimmt.
+        """
+        adm = Administration()
+        konversation = adm.delete_konversation_by_konversation_id(konversation_id)
+        return konversation
+
+    @lernpartnerapp.marshal_with(konversation)
+    @lernpartnerapp.expect(konversation, validate=True)
+    def put(self, konversation_id):
+        """ Konversation Instanz updaten """
+        adm = Administration()
+        konversation_object = Konversation.from_dict(api.payload)
+
+        if konversation_object is not None:
+            """Hierdurch wird die id des zu überschreibenden Konversations-Objekts gesetzt.
+            """
+            konversation_object.set_id(konversation_id)
+            adm.update_konversation(konversation_object)
+            return '', 200
+        else:
+            return '', 500
 
 
 """Nachricht"""

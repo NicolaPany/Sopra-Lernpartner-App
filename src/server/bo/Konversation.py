@@ -26,3 +26,12 @@ class Konversation (bo.BusinessObject):
     def set_anfragestatus(self, anfragestatus):
         """"Setzen des Anfragestatus"""
         self._anfragestatus = anfragestatus
+
+
+    def from_dict(dictionary=dict()) -> object:
+        """Umwandeln eines Python dict() in eine Konversation()."""
+        obj = Konversation()
+        obj.set_id(dictionary["id"])
+        obj.set_anfragestatus(dictionary["anfragestatus"])
+
+        return obj
