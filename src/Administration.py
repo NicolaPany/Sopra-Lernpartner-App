@@ -4,6 +4,11 @@ from server.bo.Lerndaten import Lerndaten
 from server.bo.Lerngruppe import Lerngruppe
 from server.bo.Konversation import Konversation
 from server.bo.Nachricht import Nachricht
+from server.bo.Chatteilnahme import Chatteilnahme
+from server.bo.Gruppenteilnahme import Gruppenteilnahme
+from server.bo.Lernfaecher import Lernfaecher
+from server.bo.Profil_Lernfaecher import Profil_Lernfaecher
+from server.bo.Match import Match
 
 from server.db.PersonMapper import PersonMapper
 from server.db.ProfilMapper import ProfilMapper
@@ -28,7 +33,7 @@ class Administration(object):
         person.set_lerngruppe(lerngruppe)
         person.set_google_user_id(google_user_id)
         person.set_email(email)
-        person.set_profil(profil_id)
+        person.set_profil_id(profil_id)
         person.set_id(1)
 
         with PersonMapper() as mapper:
@@ -51,7 +56,7 @@ class Administration(object):
 
 
 
-    def create_profil(self, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, id):
+    def create_profil(self, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung):
         """Ein Profil anlegen"""
 
         profil = Profil()
@@ -60,7 +65,6 @@ class Administration(object):
         profil.set_semester(semester)
         profil.set_lernfaecher(lernfaecher)
         profil.set_selbsteinschaetzung(selbsteinschaetzung)
-        profil.set_person(id)
         profil.set_id(1)
 
         with ProfilMapper() as mapper:
@@ -134,11 +138,12 @@ class Administration(object):
             return mapper.find_by_id(lerngruppe_id)
 
 
-    def create_konversation(self, anfragestatus):
+    def create_konversation(self, anfragestatus, nachricht_id):
         """Eine Konversation erstellen"""
 
         konversation = Konversation()
         konversation.set_anfragestatus(anfragestatus)
+        konversation.set_nachricht_id(nachricht_id)
         konversation.set_id(1)
 
         with KonversationMapper() as mapper:
@@ -166,13 +171,11 @@ class Administration(object):
             return mapper.update(konversation)
 
 
-    def create_nachricht(self, nachricht_text, person_id, konversation_id):
+    def create_nachricht(self, nachricht_text):
         """Eine Nachricht erstellen"""
 
         nachricht = Nachricht()
         nachricht.set_nachricht_text(nachricht_text)
-        nachricht.set_person_id(person_id)
-        nachricht.set_konversation_id(konversation_id)
         nachricht.set_id(1)
 
         with NachrichtMapper() as mapper:

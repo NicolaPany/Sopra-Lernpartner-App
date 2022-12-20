@@ -24,7 +24,7 @@ class PersonMapper(Mapper):
             person.set_lerngruppe(lerngruppe)
             person.set_google_user_id(google_user_id)
             person.set_email(email)
-            person.set_profil(profil_id)
+            person.set_profil_id(profil_id)
             result.append(person)
             print(result)
 
@@ -53,7 +53,7 @@ class PersonMapper(Mapper):
             person.set_lerngruppe(lerngruppe)
             person.set_google_user_id(google_user_id)
             person.set_email(email)
-            person.set_profil(profil_id)
+            person.set_profil_id(profil_id)
             result = person
         except IndexError:
             """ Tritt auf, wenn es beim SELECT-Aufruf kein Ergebnis liefert, sondern personen_daten leer ist """

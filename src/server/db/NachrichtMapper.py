@@ -13,12 +13,10 @@ class NachrichtMapper(Mapper):
         cursor.execute("SELECT * FROM Nachricht")
         nachricht_daten = cursor.fetchall()
 
-        for (nachricht_id, nachricht_text, person_id, konversation_id) in nachricht_daten:
+        for (nachricht_id, nachricht_text) in nachricht_daten:
             nachricht = Nachricht()
             nachricht.set_id(nachricht_id)
             nachricht.set_nachricht_text(nachricht_text)
-            nachricht.set_person_id(person_id)
-            nachricht.set_konversation_id(konversation_id)
             result.append(nachricht)
             print(result)
 

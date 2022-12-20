@@ -37,3 +37,12 @@ class Lerngruppe(NamedBusinessObject):
         """Setzen der Gruppenteilnehmer"""
         self._teilnehmer = teilnehmer
 
+
+    def from_dict(dictionary=dict()) -> object:
+        """Umwandeln eines Python dict() in eine Lerngruppe()."""
+        obj = Lerngruppe()
+        obj.set_id(dictionary["id"])
+        obj.set_gruppenname(dictionary["gruppenname"])
+        obj.set_teilnehmer(dictionary["teilnehmer"])
+
+        return obj

@@ -23,7 +23,7 @@ class Lerndaten(BusinessObject):
         """Eigene Beurteilung der Vorkenntnisse (sehr gut, gut, mittel, schlecht, sehr schlecht)"""
         self._extrovertiertheit = None
         """Eigene Beurteilung der Extrovertiertheit (sehr, mittel, schwach)"""
-        self._profil = None
+        self._profil_id = None
         """Profil ID einer Person"""
 
     def get_tageszeit(self):
@@ -98,11 +98,26 @@ class Lerndaten(BusinessObject):
         """Setzen der Extrovertiertheit"""
         self._extrovertiertheit = extrovertiertheit
 
-    def get_profil(self):
+    def get_profil_id(self):
         """Auslesen des Profils"""
-        return self._profil
+        return self._profil_id
 
-    def set_profil(self, profil):
+    def set_profil_id(self, profil_id):
         """Setzen des Profils"""
-        self._profil = profil
+        self._profil_id = profil_id
 
+    def from_dict(dictionary=dict()) -> object:
+        """Umwandeln eines Python dict() in Lerndaten()."""
+        obj = Lerndaten()
+        obj.set_id(dictionary["id"])
+        obj.set_tageszeit(dictionary["tageszeit"])
+        obj.set_tage(dictionary["tage"])
+        obj.set_frequenz(dictionary["frequenz"])
+        obj.set_lernort(dictionary["lernort"])
+        obj.set_lernart(dictionary["lernart"])
+        obj.set_gruppengroesse_min(dictionary["gruppengroesse_min"])
+        obj.set_gruppengroesse_max(dictionary["gruppengroesse_max"])
+        obj.set_vorkenntnisse(dictionary["vorkenntnisse"])
+        obj.set_extrovertiertheit(dictionary["extrovertiertheit"])
+        obj.set_profil_id(dictionary["profil_id"])
+        return obj

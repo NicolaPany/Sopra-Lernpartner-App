@@ -15,8 +15,6 @@ class Profil(NamedBusinessObject):
         """Liste aller Lernfaecher, die zum Profil gehören"""
         self._selbsteinschaetzung= 0
         """Selbsteinschätzung einer Person von 1-5"""
-        self._person = None
-        """Person ID des Profils"""
 
     def get_hochschule(self):
         """Auslesen der Hochschule"""
@@ -55,13 +53,6 @@ class Profil(NamedBusinessObject):
         """Setzen der Selbsteinschätzung"""
         self._selbsteinschaetzung = value
 
-    def get_person(self):
-        """Auslesen einer Person"""
-        return self._person
-
-    def set_person(self, value):
-        """Setzen einer Person"""
-        self._person = value
 
     def from_dict(dictionary=dict()):
         """Umwandeln eines Python dict() in ein Profil()."""
@@ -72,6 +63,5 @@ class Profil(NamedBusinessObject):
         obj.set_semester(dictionary["semester"])
         obj.set_lernfaecher(dictionary["lernfaecher"])
         obj.set_selbsteinschaetzung(dictionary["selbsteinschaetzung"])
-        obj.set_person(dictionary["person"])
 
         return obj

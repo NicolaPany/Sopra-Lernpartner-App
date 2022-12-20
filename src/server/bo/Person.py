@@ -17,7 +17,7 @@ class Person(NamedBusinessObject):
         """Google User ID der Person"""
         self._email = None
         """E-Mail einer Person"""
-        self._profil = None
+        self._profil_id = None
         """Profil ID einer Person"""
 
     def get_vorname(self):
@@ -68,10 +68,25 @@ class Person(NamedBusinessObject):
         """ Setzen der E-Mail-Adresse"""
         self._email = value
 
-    def get_profil(self):
+    def get_profil_id(self):
         """Auslesen des Profils"""
-        return self._profil
+        return self._profil_id
 
-    def set_profil(self, value):
+    def set_profil_id(self, value):
         """Setzen eines Profils"""
-        self._profil = value
+        self._profil_id = value
+
+    def from_dict(dictionary=dict()) -> object:
+        """Umwandeln eines Python dict() in eine Person()."""
+        obj = Person()
+        obj.set_id(dictionary["id"])
+        obj.set_name(dictionary["nachname"])
+        obj.set_vorname(dictionary["vorname"])
+        obj.set_lebensjahre(dictionary["lebensjahre"])
+        obj.set_geschlecht(dictionary["geschlecht"])
+        obj.set_lerngruppe(dictionary["lerngruppe"])
+        obj.set_google_user_id(dictionary["google_user_id"])
+        obj.set_email(dictionary["email"])
+        obj.set_profil_id(dictionary["profil_id"])
+
+        return obj

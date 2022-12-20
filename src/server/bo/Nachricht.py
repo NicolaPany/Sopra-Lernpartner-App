@@ -8,10 +8,6 @@ class Nachricht(bo.BusinessObject):
         """Die ID der Nachricht"""
         self._nachricht_text = ""
         """Der Text, den eine Nachricht beinhaltet"""
-        self._person_id = 0
-        """Die ID der Person, die die Nachricht sendet"""
-        self._konversation_id = 0
-        """Die ID der zugehörigen Konversation"""
 
     def get_nachricht_id(self):
         """Auslesen der Nachrichten-ID"""
@@ -29,18 +25,10 @@ class Nachricht(bo.BusinessObject):
         """Setzen des Texts einer Nachricht"""
         self._nachricht_text = text
 
-    def get_person_id(self):
-        """Auslesen des Senders der Nachricht"""
-        return self._person_id
+    def from_dict(dictionary=dict()) -> object:
+        """Umwandeln eines Python dict() in eine Nachricht()."""
+        obj = Nachricht()
+        obj.set_id(dictionary["id"])
+        obj.set_nachricht_text(dictionary["nachricht_text"])
 
-    def set_person_id(self, person_id):
-        """Setzen des Senders der Nachricht"""
-        self._person_id = person_id
-
-    def get_konversation_id(self):
-        """Auslesen der zugehörigen Konversation der Nachricht"""
-        return self._konversation_id
-
-    def set_konversation_id(self, konversation_id):
-        """Setzen der zugehörigen Konversation der Nachricht"""
-        self._konversation_id = konversation_id
+        return obj

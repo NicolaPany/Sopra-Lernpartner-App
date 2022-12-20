@@ -13,7 +13,7 @@ class ProfilMapper(Mapper):
         cursor.execute("SELECT * FROM Profil")
         profil_daten = cursor.fetchall()
 
-        for (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, person_id) in profil_daten:
+        for (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung) in profil_daten:
             profil = Profil()
             profil.set_id(profil_id)
             profil.set_hochschule(hochschule)
@@ -21,7 +21,6 @@ class ProfilMapper(Mapper):
             profil.set_semester(semester)
             profil.set_lernfaecher(lernfaecher)
             profil.set_selbsteinschaetzung(selbsteinschaetzung)
-            profil.set_person(person_id)
             result.append(profil)
             print(result)
 
@@ -40,7 +39,7 @@ class ProfilMapper(Mapper):
         profil_daten = cursor.fetchall()
 
         try:
-            (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, person_id) = profil_daten[0]
+            (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung) = profil_daten[0]
             profil = Profil()
             profil.set_id(profil_id)
             profil.set_hochschule(hochschule)
@@ -48,7 +47,6 @@ class ProfilMapper(Mapper):
             profil.set_semester(semester)
             profil.set_lernfaecher(lernfaecher)
             profil.set_selbsteinschaetzung(selbsteinschaetzung)
-            profil.set_person(person_id)
             result = profil
         except IndexError:
             """ Tritt auf, wenn es beim SELECT-Aufruf kein Ergebnis liefert, sondern profil_daten leer ist """
@@ -75,9 +73,9 @@ class ProfilMapper(Mapper):
 
 
         """ Hier wird die Profil Instanz in die Datenbank mit Hilfe des Insert Befehls gespeichert """
-        command = "INSERT INTO Profil (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung, person_id) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        command = "INSERT INTO Profil (profil_id, hochschule, studiengang, semester, lernfaecher, selbsteinschaetzung) VALUES (%s,%s,%s,%s,%s,%s)"
         data = (profil.get_id(), profil.get_hochschule(), profil.get_studiengang(), profil.get_semester(),
-                profil.get_lernfaecher(), profil.get_selbsteinschaetzung(), profil.get_person())
+                profil.get_lernfaecher(), profil.get_selbsteinschaetzung())
         cursor.execute(command, data)
 
         self._cnx.commit()
@@ -92,9 +90,9 @@ class ProfilMapper(Mapper):
         """
         cursor = self._cnx.cursor()
 
-        command = "UPDATE Profil " + "SET hochschule=%s, studiengang=%s, semester=%s, lernfaecher=%s, selbsteinschaetzung=%s, person_id=%s WHERE profil_id=%s"
+        command = "UPDATE Profil " + "SET hochschule=%s, studiengang=%s, semester=%s, lernfaecher=%s, selbsteinschaetzung=%s WHERE profil_id=%s"
         data = (profil.get_hochschule(), profil.get_studiengang(), profil.get_semester(),
-                profil.get_lernfaecher(), profil.get_selbsteinschaetzung(), profil.get_person(), profil.get_id())
+                profil.get_lernfaecher(), profil.get_selbsteinschaetzung(), profil.get_id())
         cursor.execute(command, data)
 
         self._cnx.commit()

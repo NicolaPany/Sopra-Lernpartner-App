@@ -3,12 +3,16 @@ from flask_restx import Api, Resource, fields
 from flask_cors import CORS
 from Administration import Administration
 from server.bo.Konversation import Konversation
+from server.bo.Chatteilnahme import Chatteilnahme
+from server.bo.Gruppenteilnahme import Gruppenteilnahme
 from server.bo.Lerndaten import Lerndaten
-from server.bo.Lernfach import Lernfach
+from server.bo.Lernfaecher import Lernfaecher
 from server.bo.Lerngruppe import Lerngruppe
 from server.bo.Nachricht import Nachricht
 from server.bo.Person import Person
 from server.bo.Profil import Profil
+from server.bo.Profil_Lernfaecher import Profil_Lernfaecher
+from server.bo.Match import Match
 
 """ Wir erstellen ein "Flask-Objekt" """
 app = Flask(__name__)
@@ -46,7 +50,6 @@ profil = api.inherit('Profil', bo, {
     'semester': fields.Integer(attribute='_semester', description='Semester einer Person'),
     'lernfaecher': fields.String(attribute='_lernfaecher', description='Lernfaecher einer Person'),
     'selbsteinschaetzung': fields.Integer(attribute='_selbsteinschaetzung', description='Selbsteinschätzung der Person'),
-    'person': fields.Integer(attribute='_person', description='Person ID des Profils'),
 })
 
 lerndaten = api.inherit('Lerndaten', bo, {
@@ -69,12 +72,40 @@ lerngruppe = api.inherit('Lerngruppe', bo, {
 
 konversation = api.inherit('Konversation', bo, {
     'anfragestatus': fields.String(attribute='_anfragestatus', description='Der Anfragestatus der Konversation, sprich, haben beide Teilnehmer die Chatanfrage bestätigt'),
+    'nachricht': fields.Integer(attribute='_nachricht', description='ID einer Nachricht'),
 })
 
 nachricht = api.inherit('Nachricht', bo, {
     'nachricht_text': fields.String(attribute='_nachricht_text', description='Der Text, den eine Nachricht beinhaltet'),
-    'person_id': fields.Integer(attribute='_person_id', description='Die ID der Person, die die Nachricht sendet'),
-    'konversation_id': fields.Integer(attribute='_konversation_id', description='Die ID der zugehörigen Konversation'),
+
+})
+
+chatteilnahme = api.inherit('Chatteilnahme', bo, {
+    'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
+    'konversation': fields.Integer(attribute='_konversation', description='ID der Konversation'),
+})
+
+gruppenteilnahme = api.inherit('Gruppenteilnahme', bo, {
+    'status': fields.String(attribute='_status', description='Status der Teilnahme'),
+    'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
+    'lerngruppe': fields.Integer(attribute='_lerngruppe', description='ID der Lerngruppe'),
+})
+
+lernfaecher = api.inherit('Lernfaecher', bo, {
+    'lernfachname': fields.String(attribute='_lernfachname', description='Name des Lernfaches'),
+})
+
+profil_lernfaecher = api.inherit('Profil_Lernfaecher', bo, {
+    'lerngruppe': fields.Integer(attribute='_lerngruppe', description='ID der Lerngruppe'),
+    'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
+})
+
+match = api.inherit('Match', bo, {
+    'match_id': fields.Integer(attribute='_match_id', description='ID des Matches'),
+    'suchende_person_id': fields.Integer(attribute='_suchende_person_id', description='ID der suchenden Person'),
+    'quote': fields.Integer(attribute='_quote', description='Übereinstimmungsquote'),
+    'lernfach': fields.String(attribute='_lernfach', description='Lernfach nach dem gesucht wird'),
+    'match_profil_id': fields.Integer(attribute='_match_profil_id', description='ID der gematchten Person'),
 })
 
 """Person"""
@@ -140,7 +171,7 @@ class ProfilOperations(Resource):
             """ Wir erstellen in Administration eine Projekt mithilfe der Daten vom api.payload """
             c = adm.create_profil(profil_object.get_hochschule(), profil_object.get_studiengang(),
                                   profil_object.get_semester(), profil_object.get_lernfaecher(),
-                                  profil_object.get_selbsteinschaetzung(), profil_object.get_person())
+                                  profil_object.get_selbsteinschaetzung())
             return c, 200
         else:
             # Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.
@@ -252,11 +283,19 @@ class KonversationOperations(Resource):
 
         if konversation_object is not None:
             """ Wir erstellen in Administration eine Konversation mithilfe der Daten des api.payload """
-            c = adm.create_konversation(konversation_object.get_anfragestatus())
+            c = adm.create_konversation(konversation_object.get_anfragestatus(), konversation_object.get_nachricht_id())
             return c, 200
         else:
             # Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.
             return '', 500
+
+        """Noch nicht ganz fertig"""
+
+
+
+
+
+
 
 @lernpartnerapp.route("/konversation/<int:konversation_id>")
 @lernpartnerapp.param("konversation_id", "Die Id der gewünschten Konversation")
