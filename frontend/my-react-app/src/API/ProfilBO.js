@@ -8,7 +8,6 @@ export default class ProfilBO extends BusinessObject{
         this.semester = semester;
         this.lernfaecher = lernfaecher;
         this.selbsteinschaetzung = selbsteinschaetzung;
-        this.person = person;
     }
 
     get_hochschule(){
@@ -49,14 +48,6 @@ export default class ProfilBO extends BusinessObject{
 
     set_selbsteinschaetzung(selbsteinschaetzung){
         this.selbsteinschaetzung = selbsteinschaetzung;
-    }
-
-    get_person(){
-        return this.person;
-    }
-
-    set_person(person){
-        this.person = person;
     }
 
 

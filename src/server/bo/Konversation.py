@@ -18,7 +18,6 @@ class Konversation (bo.BusinessObject):
         """Setzen der Konversations-ID"""
         self._konversation_id = value
 
-
     def get_anfragestatus(self):
         """Auslesen des Anfragestatus"""
         return self._anfragestatus
