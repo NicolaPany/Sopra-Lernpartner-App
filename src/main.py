@@ -96,8 +96,8 @@ lernfaecher = api.inherit('Lernfaecher', bo, {
 })
 
 profil_lernfaecher = api.inherit('Profil_Lernfaecher', bo, {
-    'lerngruppe': fields.Integer(attribute='_lerngruppe', description='ID der Lerngruppe'),
     'profil': fields.Integer(attribute='_profil', description='Profil ID einer Person'),
+    'lernfach': fields.Integer(attribute='_lernfach', description='ID des Lernfaches'),
 })
 
 match = api.inherit('Match', bo, {
@@ -145,7 +145,7 @@ class PersonByIdOperations(Resource):
 
 
 """Profil"""
-@lernpartnerapp.route('/profile')
+@lernpartnerapp.route('/profil')
 @lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProfilOperations(Resource):
     @lernpartnerapp.marshal_list_with(profil)
@@ -177,12 +177,12 @@ class ProfilOperations(Resource):
             # Wenn irgendetwas schiefgeht, dann geben wir nichts zurück und werfen einen Server-Fehler.
             return '', 500
 
-@lernpartnerapp.route("/profile/<int:profil_id>")
+@lernpartnerapp.route("/profil/<int:profil_id>")
 @lernpartnerapp.param("profil_id", "Die Id des gewünschten Profils")
 class ProfilByIdOperations(Resource):
     @lernpartnerapp.marshal_with(profil)
     def get(self, profil_id):
-        """ Auslesen der Profil Instanz.
+        """ Auslesen der Profil-Instanz.
         Das zu auslesende Objekt wird anhand der id bestimmt
         """
         adm = Administration()
@@ -347,6 +347,82 @@ class NachrichtOperations(Resource):
         adm = Administration()
         nachricht = adm.get_all_nachricht()
         return nachricht
+
+
+"""Chatteilnahme"""
+@lernpartnerapp.route('/chatteilnahme')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class ChatteilnahmeOperations(Resource):
+    @lernpartnerapp.marshal_list_with(chatteilnahme)
+    def get(self):
+        """Auslesen aller Chatteilnahme-Objekte.
+        Sollten keine Chatteilnahme-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        chatteilnahme = adm.get_all_chatteilnahme()
+        return chatteilnahme
+
+
+
+"""Gruppenteilnahme"""
+@lernpartnerapp.route('/gruppenteilnahme')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class GruppenteilnahmeOperations(Resource):
+    @lernpartnerapp.marshal_list_with(gruppenteilnahme)
+    def get(self):
+        """Auslesen aller Gruppenteilnahme-Objekte.
+        Sollten keine Gruppenteilnahme-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        gruppenteilnahme = adm.get_all_gruppenteilnahme()
+        return gruppenteilnahme
+
+
+"""Lernfaecher"""
+@lernpartnerapp.route('/lernfaecher')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class LernfaecherOperations(Resource):
+    @lernpartnerapp.marshal_list_with(lernfaecher)
+    def get(self):
+        """Auslesen aller Lernfaecher-Objekte.
+        Sollten keine Lernfaecher-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        lernfaecher = adm.get_all_lernfaecher()
+        return lernfaecher
+
+
+"""Profil_Lernfaecher"""
+@lernpartnerapp.route('/profil_lernfaecher')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class Profil_LernfaecherOperations(Resource):
+    @lernpartnerapp.marshal_list_with(profil_lernfaecher)
+    def get(self):
+        """Auslesen aller Profil_Lernfaecher-Objekte.
+        Sollten keine Profil_Lernfaecher-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        profil_lernfaecher = adm.get_all_profil_lernfaecher()
+        return profil_lernfaecher
+
+
+"""Match"""
+@lernpartnerapp.route('/match')
+@lernpartnerapp.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+class MatchOperations(Resource):
+    @lernpartnerapp.marshal_list_with(match)
+    def get(self):
+        """Auslesen aller Match-Objekte.
+        Sollten keine Match-Objekte verfügbar sein,
+        so wird eine leere Sequenz zurückgegeben."""
+
+        adm = Administration()
+        match = adm.get_all_match()
+        return match
 
 
 """ Server läuft auf localhost:5000 bzw. 127.0.0.1:5000 """

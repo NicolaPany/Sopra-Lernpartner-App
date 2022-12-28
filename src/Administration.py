@@ -16,6 +16,11 @@ from server.db.LerndatenMapper import LerndatenMapper
 from server.db.LerngruppeMapper import LerngruppeMapper
 from server.db.KonversationMapper import KonversationMapper
 from server.db.NachrichtMapper import NachrichtMapper
+from server.db.ChatteilnahmeMapper import ChatteilnahmeMapper
+from server.db.GruppenteilnahmeMapper import GruppenteilnahmeMapper
+from server.db.LernfaecherMapper import LernfaecherMapper
+from server.db.Profil_LernfaecherMapper import Profil_LernfaecherMapper
+from server.db.MatchMapper import MatchMapper
 
 class Administration(object):
 
@@ -184,4 +189,91 @@ class Administration(object):
     def get_all_nachricht(self):
         """Alle Nachrichten auslesen"""
         with NachrichtMapper() as mapper:
+            return mapper.find_all()
+
+
+    def create_chatteilnahme(self, profil_id, konversation_id):
+        """Eine Chatteilnahme erstellen"""
+
+        chatteilnahme = Chatteilnahme()
+        chatteilnahme.set_profil_id(profil_id)
+        chatteilnahme.set_konversation_id(konversation_id)
+        chatteilnahme.set_id(1)
+
+        with ChatteilnahmeMapper() as mapper:
+            return mapper.insert(chatteilnahme)
+
+    def get_all_chatteilnahme(self):
+        """Alle Chatteilnahmen auslesen"""
+        with ChatteilnahmeMapper() as mapper:
+            return mapper.find_all()
+
+
+    def create_gruppenteilnahme(self, status, profil_id, lerngruppe_id):
+        """Eine Gruppenteilnahme erstellen"""
+
+        gruppenteilnahme = Gruppenteilnahme()
+        gruppenteilnahme.set_status(status)
+        gruppenteilnahme.set_profil_id(profil_id)
+        gruppenteilnahme.set_lerngruppe_id(lerngruppe_id)
+        gruppenteilnahme.set_id(1)
+
+        with GruppenteilnahmeMapper() as mapper:
+            return mapper.insert(gruppenteilnahme)
+
+    def get_all_gruppenteilnahme(self):
+        """Alle Gruppenteilnahmen auslesen"""
+        with GruppenteilnahmeMapper() as mapper:
+            return mapper.find_all()
+
+
+    def create_lernfaecher(self, lernfachname):
+        """Lernfaecher erstellen"""
+
+        lernfaecher = Lernfaecher()
+        lernfaecher.set_lernfachname(lernfachname)
+        lernfaecher.set_id(1)
+
+        with LernfaecherMapper() as mapper:
+            return mapper.insert(lernfaecher)
+
+    def get_all_lernfaecher(self):
+        """Alle Lernfaecher auslesen"""
+        with LernfaecherMapper() as mapper:
+            return mapper.find_all()
+
+
+    def create_profil_lernfaecher(self, profil_id, lernfach_id):
+        """Profil_Lernfaecher erstellen"""
+
+        profil_lernfaecher = Profil_Lernfaecher()
+        profil_lernfaecher.set_profil_id(profil_id)
+        profil_lernfaecher.set_lernfach_id(lernfach_id)
+        profil_lernfaecher.set_id(1)
+
+        with Profil_LernfaecherMapper() as mapper:
+            return mapper.insert(profil_lernfaecher)
+
+    def get_all_profil_lernfaecher(self):
+        """Alle Profil_Lernfaecher auslesen"""
+        with Profil_LernfaecherMapper() as mapper:
+            return mapper.find_all()
+
+
+    def create_match(self, suchende_person_id, quote, lernfach, match_profil_id):
+        """Matches erstellen"""
+
+        match = Match()
+        match.set_suchende_person_id(suchende_person_id)
+        match.set_quote(quote)
+        match.set_lernfach(lernfach)
+        match.set_match_profil_id(match_profil_id)
+        match.set_id(1)
+
+        with MatchMapper() as mapper:
+            return mapper.insert(match)
+
+    def get_all_match(self):
+        """Alle Matches auslesen"""
+        with MatchMapper() as mapper:
             return mapper.find_all()
